@@ -1,0 +1,216 @@
+# Copyright (C) 2026 Apostolou Antonios
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: AAWEB Site Credits 1.0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/aaweb-site-credits\n"
+"POT-Creation-Date: 2026-06-12 13:07+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: AAWEB manual POT builder\n"
+"X-Domain: aaweb-site-credits\n"
+
+msgid "AAWEB Site Credits"
+msgstr ""
+
+msgid "Display professional website credits with the current year."
+msgstr ""
+
+msgid "Alignment"
+msgstr ""
+
+msgid "Left"
+msgstr ""
+
+msgid "Center"
+msgstr ""
+
+msgid "Right"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Copyright"
+msgstr ""
+
+msgid "All Rights Reserved."
+msgstr ""
+
+msgid "Set the default values for the Elementor widget, Gutenberg block and shortcode output."
+msgstr ""
+
+msgid "Copyright text"
+msgstr ""
+
+msgid "Site / company name"
+msgstr ""
+
+msgid "Rights text"
+msgstr ""
+
+msgid "Credit attribution"
+msgstr ""
+
+msgid "Display optional developer credit on the public site"
+msgstr ""
+
+msgid "The developer credit is disabled by default and will only appear when this box is checked."
+msgstr ""
+
+msgid "Powered by text"
+msgstr ""
+
+msgid "Developer / brand name"
+msgstr ""
+
+msgid "Developer / brand URL"
+msgstr ""
+
+msgid "Separator"
+msgstr ""
+
+msgid "Options"
+msgstr ""
+
+msgid "Show Â© symbol"
+msgstr ""
+
+msgid "Open developer link in a new tab"
+msgstr ""
+
+msgid "Usage"
+msgstr ""
+
+msgid "Elementor:"
+msgstr ""
+
+msgid "Search for the AAWEB Site Credits widget."
+msgstr ""
+
+msgid "Shortcode:"
+msgstr ""
+
+msgid "Gutenberg:"
+msgstr ""
+
+msgid "Add the AAWEB Site Credits block."
+msgstr ""
+
+msgid "AAWEB Widgets"
+msgstr ""
+
+msgid "Content"
+msgstr ""
+
+msgid "Copyright Text"
+msgstr ""
+
+msgid "Show Â© Symbol"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "Site / Company Name"
+msgstr ""
+
+msgid "Rights Text"
+msgstr ""
+
+msgid "Display Developer Credit"
+msgstr ""
+
+msgid "Developer credit is optional and disabled by default."
+msgstr ""
+
+msgid "Powered By Text"
+msgstr ""
+
+msgid "Powered by"
+msgstr ""
+
+msgid "Developer / Brand Name"
+msgstr ""
+
+msgid "AntoApWeb"
+msgstr ""
+
+msgid "Developer / Brand URL"
+msgstr ""
+
+msgid "Layout"
+msgstr ""
+
+msgid "Items Gap"
+msgstr ""
+
+msgid "Wrap on Small Screens"
+msgstr ""
+
+msgid "Wrap"
+msgstr ""
+
+msgid "No Wrap"
+msgstr ""
+
+msgid "Text Style"
+msgstr ""
+
+msgid "Text Color"
+msgstr ""
+
+msgid "Main Text Color"
+msgstr ""
+
+msgid "Separator Color"
+msgstr ""
+
+msgid "Powered Text Color"
+msgstr ""
+
+msgid "Developer Link Style"
+msgstr ""
+
+msgid "Normal"
+msgstr ""
+
+msgid "Link Color"
+msgstr ""
+
+msgid "Decoration"
+msgstr ""
+
+msgid "None"
+msgstr ""
+
+msgid "Underline"
+msgstr ""
+
+msgid "Hover"
+msgstr ""
+
+msgid "Hover Color"
+msgstr ""
+
+msgid "Hover Decoration"
+msgstr ""
+
+msgid "Box Style"
+msgstr ""
+
+msgid "Padding"
+msgstr ""
+
+msgid "Margin"
+msgstr ""
+
+msgid "Background Color"
+msgstr ""
+
+msgid "Border Radius"
+msgstr ""
