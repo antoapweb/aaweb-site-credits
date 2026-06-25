@@ -304,6 +304,7 @@ final class AAWEB_Site_Credits_Core {
 		$allowed_alignments = array( 'left', 'center', 'right' );
 		$align              = ! empty( $args['align'] ) && in_array( $args['align'], $allowed_alignments, true ) ? $args['align'] : 'center';
 		$class              = ! empty( $args['class'] ) ? sanitize_html_class( $args['class'] ) : '';
+		$style              = self::build_inline_style( $args );
 
 		$classes = array( 'aaweb-site-credits', 'aaweb-site-credits--align-' . $align );
 
@@ -346,7 +347,7 @@ final class AAWEB_Site_Credits_Core {
 
 		ob_start();
 		?>
-		<div class="<?php echo esc_attr( implode( ' ', array_filter( $classes ) ) ); ?>">
+		<div class="<?php echo esc_attr( implode( ' ', array_filter( $classes ) ) ); ?>"<?php echo $style ? ' style="' . esc_attr( $style ) . '"' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<span class="aaweb-site-credits__left"><?php echo esc_html( implode( ' ', array_filter( $left_parts ) ) ); ?></span>
 
 			<?php if ( $show_credit && '' !== $separator ) : ?>
@@ -363,6 +364,149 @@ final class AAWEB_Site_Credits_Core {
 		<?php
 
 		return trim( ob_get_clean() );
+	}
+
+
+	/**
+	 * Build safe inline style from block attributes.
+	 *
+	 * @param array<string,mixed> $args Render arguments.
+	 * @return string
+	 */
+	private static function build_inline_style( array $args ): string {
+		$styles = array();
+
+		$color_props = array(
+			'textColor'             => '--aaweb-site-credits-text-color',
+			'backgroundColor'       => '--aaweb-site-credits-background-color',
+			'borderColor'           => '--aaweb-site-credits-border-color',
+			'linkColor'             => '--aaweb-site-credits-link-color',
+			'textHoverColor'        => '--aaweb-site-credits-hover-text-color',
+			'linkHoverColor'        => '--aaweb-site-credits-hover-link-color',
+			'backgroundHoverColor'  => '--aaweb-site-credits-hover-background-color',
+			'borderHoverColor'      => '--aaweb-site-credits-hover-border-color',
+		);
+
+		foreach ( $color_props as $key => $property ) {
+			if ( ! empty( $args[ $key ] ) ) {
+				$color = sanitize_hex_color( (string) $args[ $key ] );
+
+				if ( $color ) {
+					$styles[] = $property . ':' . $color;
+				}
+			}
+		}
+
+		$pixel_props = array(
+			'fontSize'      => 'font-size',
+			'paddingTop'    => 'padding-top',
+			'paddingRight'  => 'padding-right',
+			'paddingBottom' => 'padding-bottom',
+			'paddingLeft'   => 'padding-left',
+			'marginTop'     => 'margin-top',
+			'marginBottom'  => 'margin-bottom',
+			'borderRadius'  => 'border-radius',
+			'borderWidth'   => 'border-width',
+			'letterSpacing' => 'letter-spacing',
+		);
+
+		foreach ( $pixel_props as $key => $property ) {
+			if ( isset( $args[ $key ] ) && '' !== $args[ $key ] ) {
+				$value = absint( $args[ $key ] );
+
+				if ( $value > 0 ) {
+					$styles[] = $property . ':' . $value . 'px';
+				}
+			}
+		}
+
+		if ( ! empty( $args['borderWidth'] ) && absint( $args['borderWidth'] ) > 0 ) {
+			$styles[] = 'border-style:solid';
+		}
+
+		if ( isset( $args['transitionDuration'] ) && '' !== $args['transitionDuration'] ) {
+			$duration = absint( $args['transitionDuration'] );
+
+			if ( $duration >= 0 && $duration <= 5000 ) {
+				$styles[] = '--aaweb-site-credits-transition-duration:' . $duration . 'ms';
+			}
+		}
+
+		if ( ! empty( $args['lineHeight'] ) ) {
+			$line_height = (float) $args['lineHeight'];
+
+			if ( $line_height > 0 && $line_height <= 5 ) {
+				$styles[] = 'line-height:' . rtrim( rtrim( number_format( $line_height, 2, '.', '' ), '0' ), '.' );
+			}
+		}
+
+		if ( ! empty( $args['textTransform'] ) ) {
+			$text_transform = (string) $args['textTransform'];
+
+			if ( in_array( $text_transform, array( 'none', 'uppercase', 'lowercase', 'capitalize' ), true ) ) {
+				$styles[] = 'text-transform:' . $text_transform;
+			}
+		}
+
+		if ( ! empty( $args['fontWeight'] ) ) {
+			$font_weight = (string) $args['fontWeight'];
+
+			if ( preg_match( '/^(300|400|500|600|700|800)$/', $font_weight ) ) {
+				$styles[] = 'font-weight:' . $font_weight;
+			}
+		}
+
+		if ( ! empty( $args['customCss'] ) ) {
+			$custom_css = self::sanitize_css_properties( (string) $args['customCss'] );
+
+			if ( '' !== $custom_css ) {
+				$styles[] = $custom_css;
+			}
+		}
+
+		return implode( ';', array_filter( $styles ) );
+	}
+
+	/**
+	 * Sanitize advanced CSS property list.
+	 *
+	 * Allows simple CSS declarations only. Selectors and braces are removed.
+	 *
+	 * @param string $css CSS declarations.
+	 * @return string
+	 */
+	private static function sanitize_css_properties( string $css ): string {
+		$css = wp_strip_all_tags( $css );
+		$css = str_replace( array( '{', '}' ), '', $css );
+		$css = preg_replace( '/expression\s*\(|javascript\s*:|data\s*:/i', '', $css );
+
+		if ( ! is_string( $css ) ) {
+			return '';
+		}
+
+		$declarations = array();
+
+		foreach ( explode( ';', $css ) as $declaration ) {
+			$declaration = trim( $declaration );
+
+			if ( '' === $declaration || false === strpos( $declaration, ':' ) ) {
+				continue;
+			}
+
+			list( $property, $value ) = array_map( 'trim', explode( ':', $declaration, 2 ) );
+
+			if ( ! preg_match( '/^[a-zA-Z\-]+$/', $property ) || '' === $value ) {
+				continue;
+			}
+
+			$value = preg_replace( '/[^#%.,()\sa-zA-Z0-9_\-\/]/', '', $value );
+
+			if ( is_string( $value ) && '' !== trim( $value ) ) {
+				$declarations[] = strtolower( $property ) . ':' . trim( $value );
+			}
+		}
+
+		return implode( ';', $declarations );
 	}
 
 	/**
@@ -405,6 +549,117 @@ final class AAWEB_Site_Credits_Core {
 		}
 	}
 
+
+	/**
+	 * Get Gutenberg block attributes.
+	 *
+	 * @return array<string,array<string,mixed>>
+	 */
+	private static function get_block_attributes(): array {
+		return array(
+			'align'           => array(
+				'type'    => 'string',
+				'default' => 'center',
+			),
+			'className'       => array(
+				'type'    => 'string',
+				'default' => '',
+			),
+			'textColor'       => array(
+				'type'    => 'string',
+				'default' => '',
+			),
+			'linkColor'       => array(
+				'type'    => 'string',
+				'default' => '',
+			),
+			'backgroundColor' => array(
+				'type'    => 'string',
+				'default' => '',
+			),
+			'borderColor'     => array(
+				'type'    => 'string',
+				'default' => '',
+			),
+			'textHoverColor'  => array(
+				'type'    => 'string',
+				'default' => '',
+			),
+			'linkHoverColor'  => array(
+				'type'    => 'string',
+				'default' => '',
+			),
+			'backgroundHoverColor' => array(
+				'type'    => 'string',
+				'default' => '',
+			),
+			'borderHoverColor' => array(
+				'type'    => 'string',
+				'default' => '',
+			),
+			'fontSize'        => array(
+				'type'    => 'number',
+				'default' => 14,
+			),
+			'fontWeight'      => array(
+				'type'    => 'string',
+				'default' => '',
+			),
+			'textTransform'   => array(
+				'type'    => 'string',
+				'default' => '',
+			),
+			'lineHeight'      => array(
+				'type'    => 'number',
+				'default' => 0,
+			),
+			'letterSpacing'   => array(
+				'type'    => 'number',
+				'default' => 0,
+			),
+			'paddingTop'      => array(
+				'type'    => 'number',
+				'default' => 0,
+			),
+			'paddingRight'    => array(
+				'type'    => 'number',
+				'default' => 0,
+			),
+			'paddingBottom'   => array(
+				'type'    => 'number',
+				'default' => 0,
+			),
+			'paddingLeft'     => array(
+				'type'    => 'number',
+				'default' => 0,
+			),
+			'marginTop'       => array(
+				'type'    => 'number',
+				'default' => 0,
+			),
+			'marginBottom'    => array(
+				'type'    => 'number',
+				'default' => 0,
+			),
+			'borderRadius'    => array(
+				'type'    => 'number',
+				'default' => 0,
+			),
+			'borderWidth'     => array(
+				'type'    => 'number',
+				'default' => 0,
+			),
+			'transitionDuration' => array(
+				'type'    => 'number',
+				'default' => 200,
+			),
+			'customCss'       => array(
+				'type'    => 'string',
+				'default' => '',
+			),
+		);
+	}
+
 	/**
 	 * Register Gutenberg block.
 	 *
@@ -432,16 +687,7 @@ final class AAWEB_Site_Credits_Core {
 				'editor_script'   => 'aaweb-site-credits-block',
 				'style'           => 'aaweb-site-credits',
 				'render_callback' => array( __CLASS__, 'render_block' ),
-				'attributes'      => array(
-					'align'     => array(
-						'type'    => 'string',
-						'default' => 'center',
-					),
-					'className' => array(
-						'type'    => 'string',
-						'default' => '',
-					),
-				),
+				'attributes'      => self::get_block_attributes(),
 				'supports'        => array(
 					'customClassName' => true,
 				),
@@ -458,12 +704,9 @@ final class AAWEB_Site_Credits_Core {
 	public static function render_block( array $attributes ): string {
 		wp_enqueue_style( 'aaweb-site-credits' );
 
-		return self::render_output(
-			array(),
-			array(
-				'align' => $attributes['align'] ?? 'center',
-				'class' => $attributes['className'] ?? '',
-			)
-		);
+		$args = $attributes;
+		$args['class'] = $attributes['className'] ?? '';
+
+		return self::render_output( array(), $args );
 	}
 }

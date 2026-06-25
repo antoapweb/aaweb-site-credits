@@ -5,11 +5,11 @@ Tags: elementor, shortcode, footer, credits, gutenberg
 Requires at least: 6.8
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Professional Elementor widget and shortcode for displaying website credits.
+Professional Elementor widget, Gutenberg block and shortcode for displaying website credits.
 
 == Description ==
 
@@ -20,15 +20,16 @@ Perfect for web designers, developers, agencies, freelancers, WordPress websites
 Features:
 
 * Elementor widget
-* Gutenberg block
+* Gutenberg block with visual styling controls
 * Shortcode support
 * Classic Editor support
 * Responsive design
 * Footer ready
 * Custom text
 * Custom links
-* Typography controls
-* Color controls
+* Gutenberg typography controls
+* Gutenberg color controls
+* Gutenberg spacing controls
 * Lightweight code
 * Settings shortcut on the Plugins screen
 
@@ -65,6 +66,17 @@ Yes. It works on desktop, tablet and mobile devices.
 
 == Changelog ==
 
+= 1.1.1 =
+* Added Gutenberg hover controls for text, link, background and border colors.
+* Added transition duration, border width, line height, letter spacing and text transform controls.
+
+
+= 1.1.0 =
+* Added Gutenberg block styling controls for text color, link color and background color.
+* Added Gutenberg typography controls for font size and font weight.
+* Added Gutenberg spacing controls for padding, margin and border radius.
+* Kept Additional CSS as an advanced option.
+
 = 1.0.1 =
 * Added Settings shortcut on the Plugins screen.
 * Updated translation template and documentation.
@@ -73,6 +85,9 @@ Yes. It works on desktop, tablet and mobile devices.
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+Adds visual Gutenberg styling controls for colors, typography and spacing.
 
 = 1.0.1 =
 Adds a Settings shortcut on the Plugins screen.

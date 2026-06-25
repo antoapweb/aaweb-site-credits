@@ -8,6 +8,10 @@
 	font-size: 14px;
 	line-height: 1.5;
 	text-align: center;
+	color: var(--aaweb-site-credits-text-color, inherit);
+	background-color: var(--aaweb-site-credits-background-color, transparent);
+	border-color: var(--aaweb-site-credits-border-color, currentColor);
+	transition: color var(--aaweb-site-credits-transition-duration, 200ms) ease, background-color var(--aaweb-site-credits-transition-duration, 200ms) ease, border-color var(--aaweb-site-credits-transition-duration, 200ms) ease, opacity var(--aaweb-site-credits-transition-duration, 200ms) ease;
 }
 
 .aaweb-site-credits *,
@@ -16,15 +20,23 @@
 	box-sizing: border-box;
 }
 
+.aaweb-site-credits:hover,
+.aaweb-site-credits:focus-within {
+	color: var(--aaweb-site-credits-hover-text-color, var(--aaweb-site-credits-text-color, inherit));
+	background-color: var(--aaweb-site-credits-hover-background-color, var(--aaweb-site-credits-background-color, transparent));
+	border-color: var(--aaweb-site-credits-hover-border-color, var(--aaweb-site-credits-border-color, currentColor));
+}
+
 .aaweb-site-credits a {
-	color: inherit;
+	color: var(--aaweb-site-credits-link-color, inherit);
 	font-weight: 600;
 	text-decoration: none;
-	transition: color 0.2s ease, opacity 0.2s ease;
+	transition: color var(--aaweb-site-credits-transition-duration, 200ms) ease, opacity var(--aaweb-site-credits-transition-duration, 200ms) ease;
 }
 
 .aaweb-site-credits a:hover,
 .aaweb-site-credits a:focus {
+	color: var(--aaweb-site-credits-hover-link-color, var(--aaweb-site-credits-link-color, inherit));
 	text-decoration: underline;
 }
 

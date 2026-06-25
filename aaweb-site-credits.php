@@ -3,7 +3,7 @@
  * Plugin Name: AAWEB Site Credits
  * Plugin URI: https://antoapweb.gr/aaweb-site-credits/
  * Description: Elementor widget, Gutenberg block and shortcode for displaying professional website credits with the current year.
- * Version: 1.0.1
+ * Version: 1.1.1
  * Author: AAWEB Apostolou Antonios
  * Author URI: https://antoapweb.gr
  * Text Domain: aaweb-site-credits
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'AAWEB_SITE_CREDITS_VERSION', '1.0.1' );
+define( 'AAWEB_SITE_CREDITS_VERSION', '1.1.1' );
 define( 'AAWEB_SITE_CREDITS_FILE', __FILE__ );
 define( 'AAWEB_SITE_CREDITS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AAWEB_SITE_CREDITS_URL', plugin_dir_url( __FILE__ ) );
